@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Attendance</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Smart Attendance</h1>
+    <a class="export-btn" href="/api/attendance/export">Export CSV</a>
+  </header>
+
+  <div class="app-body">
+
+    <div class="camera-wrap">
+      <div class="camera-placeholder" id="camera-placeholder">
+        <p>Starting camera...</p>
+      </div>
+      <video id="video" autoplay playsinline hidden></video>
+      <canvas id="canvas" hidden></canvas>
+
+      <div class="scan-indicator" id="scan-indicator" hidden>Scanning...</div>
+
+      <div class="result-overlay" id="result-overlay" hidden>
+        <span class="result-badge" id="result-badge"></span>
+        <span class="result-name" id="result-name"></span>
+        <span class="result-msg" id="result-msg"></span>
+      </div>
+    </div>
+
+    <aside class="attendance-panel">
+      <div class="panel-header">
+        <span class="panel-label">Today's Attendance</span>
+        <span class="today-date" id="today-date"></span>
+      </div>
+      <div class="present-list" id="present-list">
+        <div class="empty-state">No one checked in yet.</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <script>
+    window.SMART_ATTENDANCE_BOOTSTRAP = {
+      threshold: {{ threshold | tojson }},
+      roster: {{ roster | tojson }},
+      cooldown_minutes: {{ cooldown_minutes | tojson }}
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
